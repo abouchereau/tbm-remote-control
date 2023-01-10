@@ -1,0 +1,12 @@
+{
+  "bin": "index.js",
+  "name": "tbm-remote-control",
+  "description": "TBM Remote Control",
+  "dependencies": {
+    "websocket": "^1.0.34"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "php -S localhost:8000"
+  }
+}
