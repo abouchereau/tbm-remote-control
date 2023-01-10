@@ -10,7 +10,7 @@ let clientTBM = null;
 socket.on('error', (err) => console.error("Error: " + err.message));
 socket.on('request', (request) => {
     console.log("REQUEST");
-    connection = request.accept(null, request.origin);
+    let connection = request.accept(null, request.origin);
     connection.on('message', msg => {
 
         console.log("MSG ", msg);
@@ -32,9 +32,10 @@ socket.on('request', (request) => {
 
 setInterval(()=>{
     let timeKill = Date.now() - 1000*60*10;//10 minutes
-    if (this.clients.length>0) {
+    if (clients.length>0) {
         for (let i = clients.length - 1; i >= 0; i--) {
             if (clients[i] != null && clients[i].time < timeKill) {
+                clients[i].connection.send("TIMEOUT");
                 clients[i].connection.terminate();
                 clients.splice(i);
             }
