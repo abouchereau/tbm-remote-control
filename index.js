@@ -17,7 +17,8 @@ socket.on('request', (request) => {
         //nouvel utilisateur
         if (msg.utf8Data.indexOf("N") === 0) {
             let name = msg.utf8Data.substr(1,16);
-            console.log("CONNECTING "+name);
+            const date = new Date();
+            console.log(date.toUTCString(),"New Challenger :", +name);
             clients.push({"name":name, "connection":connection, "time":Date.now()});
             connection.send("OK");
         }

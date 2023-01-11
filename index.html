@@ -142,9 +142,14 @@
             if (msg.data=="OK") {
                 document.getElementById("auth").style.display = "none";
             }
+            if (msg.data=="TIMEOUT") {
+                socket.close();
+                window.location.reload();
+            }
         };
         socket.onopen = e=> {
             socket.send("N"+name);
+            sessionStorage.set("pseudo", name);
         }
     }
 
@@ -188,6 +193,9 @@
 
     window.addEventListener('DOMContentLoaded', (e) => {
         redimButtons();
+        if (sessionStorage.get('pseudo') != null) {
+            document.getElementById("pseudo").value = sessionStorage.get('pseudo');
+        }
     });
     window.addEventListener('resize', (e)=>{
         redimButtons();
