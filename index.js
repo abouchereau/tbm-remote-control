@@ -25,7 +25,7 @@ socket.on('request', (request) => {
         if (msg.utf8Data.indexOf("TBM") === 0) {
             clientTBM = connection;
         }
-        if (clientTBM != null && msg.indexOf("S")===0) {
+        if (clientTBM != null && msg.utf8Data.indexOf("S")===0) {
             clientTBM.send(msg);
         }
     });
