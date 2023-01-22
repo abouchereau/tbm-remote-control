@@ -93,7 +93,7 @@ function redimButtons() {
 window.addEventListener('DOMContentLoaded', (e) => {
     redimButtons();
     if (sessionStorage.getItem('pseudo') != null) {
-        document.getElementById("pseudo").value = sessionStorage.get('pseudo');
+        document.getElementById("pseudo").value = sessionStorage.getItem('pseudo');
     }
 });
 window.addEventListener('resize', (e)=>{
