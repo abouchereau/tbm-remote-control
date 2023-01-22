@@ -103,4 +103,17 @@ window.addEventListener("beforeunload",  (event)=> {
    if (socket != null) {
        socket.send("CLOSE");
    }
+    let confirmationMessage = "Au revoir !";
+
+    e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+    return confirmationMessage;
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        if (socket != null) {
+            socket.send("CLOSE");
+        }
+        window.location.reload();
+    }
 });
