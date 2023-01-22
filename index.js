@@ -9,11 +9,9 @@ let clientTBM = null;
 
 socket.on('error', (err) => console.error("Error: " + err.message));
 socket.on('request', (request) => {
-    console.log("REQUEST");
     let connection = request.accept(null, request.origin);
     connection.on('message', msg => {
 
-        console.log("MSG ", msg);
         //nouvel utilisateur
         if (msg.utf8Data.indexOf("N") === 0) {
             let name = msg.utf8Data.substr(1,16);
@@ -21,12 +19,14 @@ socket.on('request', (request) => {
             console.log(date.toUTCString(),"New Challenger :", name);
             clients.push({"name":name, "connection":connection, "time":Date.now()});
             connection.send("OK");
+            sendAllUsers();
         }
         if (msg.utf8Data.indexOf("TBM") === 0) {
             clientTBM = connection;
         }
         if (clientTBM != null && msg.utf8Data.indexOf("S")===0) {
             clientTBM.send(msg.utf8Data);
+            clients.map(a=>a.connection.send(msg.utf8Data));
         }
     });
 });
@@ -41,5 +41,11 @@ setInterval(()=>{
                 clients.splice(i);
             }
         }
+        sendAllUsers();
     }
 },1000);
+
+function sendAllUsers() {
+    let str = "U"+(clients.map(a=>a.name).join("|"));
+    clients.map(a=>a.connection.send(str));
+}

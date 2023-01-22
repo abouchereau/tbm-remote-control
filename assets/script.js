@@ -12,14 +12,21 @@ function addUser() {
         if (msg.data=="OK") {
             document.getElementById("auth").style.display = "none";
         }
-        if (msg.data=="TIMEOUT") {
+        else if (msg.data=="TIMEOUT") {
             socket.close();
             window.location.reload();
+        }
+        else if (msg.data.indexOf("S")===0) {
+            let num = msg.data.substr(1,1);
+            displayPushButton(1);
+        }
+        else if (msg.data.indexOf("U")===0) {
+            displayUsers(msg.data.substr(1).split("|"));
         }
     };
     socket.onopen = e=> {
         socket.send("N"+name);
-        sessionStorage.set("pseudo", name);
+        sessionStorage.setItem("pseudo", name);
     }
 }
 
@@ -27,6 +34,17 @@ function sample(num) {
     if (socket != null) {
         socket.send("S"+num);
     }
+}
+
+function displayPushButton(num) {
+    document.getElementById('btn'+num).classList.add("is-pushed");
+    setTimeout(()=>{
+        document.getElementById('btn'+num).classList.remove("is-pushed");
+    },600);
+}
+
+function displayUsers(users) {
+    console.log("displayUsers",users);
 }
 
 function redimButtons() {
@@ -61,7 +79,7 @@ function redimButtons() {
 
 window.addEventListener('DOMContentLoaded', (e) => {
     redimButtons();
-    if (sessionStorage.get('pseudo') != null) {
+    if (sessionStorage.getItem('pseudo') != null) {
         document.getElementById("pseudo").value = sessionStorage.get('pseudo');
     }
 });

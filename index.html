@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="assets/style.css"></link>
     <title>Tony-b Phone Control</title>
     <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 </head>
 <body>
 <div class="bandeau">
@@ -13,42 +15,43 @@
 <div class="fullscreen" id="control">
     <div class="box">
         <div>
-            <button class="push--skeuo" onclick="sample(1)"></button>
+            <button class="push--skeuo" id="btn1" onclick="sample(1)"></button>
             <div>Everybody Dance Now</div>
         </div>
         <div>
-            <button class="push--skeuo" onclick="sample(2)"></button>
+            <button class="push--skeuo" id="btn2" onclick="sample(2)"></button>
             <div>Put Your Hands Up In The Air</div>
         </div>
         <div>
-            <button class="push--skeuo" onclick="sample(3)"></button>
+            <button class="push--skeuo" id="btn3" onclick="sample(3)"></button>
             <div>Bom Diggy Diggy Bom</div>
         </div>
         <div>
-            <button class="push--skeuo" onclick="sample(4)"></button>
+            <button class="push--skeuo" id="btn4" onclick="sample(4)"></button>
             <div>I Like To Move It</div>
         </div>
         <div>
-            <button class="push--skeuo" onclick="sample(5)"></button>
+            <button class="push--skeuo" id="btn5" onclick="sample(5)"></button>
             <div>Are You Ready</div>
         </div>
         <div>
-            <button class="push--skeuo" onclick="sample(6)"></button>
+            <button class="push--skeuo" id="btn6" onclick="sample(6)"></button>
             <div>Buy it, use it, break it, fix it</div>
         </div>
     </div>
 </div>
 <div class="fullscreen epsilon" id="auth">
-
-    <br /><br />
-    <br /><br />
-    <br /><br />
-    <br /><br />
-    <p>Ton pseuso :<br><span class="small">(16 car. max)</span></p>
-    <input type="text" maxlength="16" id="pseudo" onkeyup="this.value=toPseudo(this.value)" />
-    <br />
-    <br />
-    <button class="btn btn-primary btn-lg" onclick="addUser()">OK</button>
+    <form onsubmit="addUser();return false;">
+        <br /><br />
+        <br /><br />
+        <br /><br />
+        <br /><br />
+        <p>Ton pseudo :<br><span class="small">(16 car. max)</span></p>
+        <input type="text" maxlength="16" id="pseudo" onkeyup="this.value=toPseudo(this.value)" />
+        <br />
+        <br />
+        <button class="btn btn-primary btn-lg" type="submit">OK</button>
+    </form>
 </div>
 </body>
 <script type="text/javascript" src="assets/script.js"></script>
