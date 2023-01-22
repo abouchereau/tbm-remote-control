@@ -5,7 +5,6 @@ const SOCKET_PORT = 3615;
 const socket = new server({httpServer: http.createServer().listen(SOCKET_PORT, ()=>{})});
 
 const clients = [];
-let clientTBM = null;
 
 socket.on('error', (err) => console.error("Error: " + err.message));
 socket.on('request', (request) => {
@@ -21,11 +20,7 @@ socket.on('request', (request) => {
             connection.send("OK");
             sendAllUsers();
         }
-        if (msg.utf8Data.indexOf("TBM") === 0) {
-            clientTBM = connection;
-        }
-        if (clientTBM != null && msg.utf8Data.indexOf("S")===0) {
-            clientTBM.send(msg.utf8Data);
+        if (msg.utf8Data.indexOf("S")===0) {
             clients.map(a=>a.connection.send(msg.utf8Data));
         }
     });
@@ -33,17 +28,22 @@ socket.on('request', (request) => {
 
 setInterval(()=>{
     let timeKill = Date.now() - 1000*60*10;//10 minutes
+    let killingInTheNameOf = "";
     if (clients.length>0) {
         for (let i = clients.length - 1; i >= 0; i--) {
             if (clients[i] != null && clients[i].time < timeKill) {
                 clients[i].connection.send("TIMEOUT");
                 clients[i].connection.terminate();
                 clients.splice(i);
+                killingInTheNameOf = clients.name;
             }
         }
-        sendAllUsers();
     }
-},1000);
+    if (killingInTheNameOf != "") {
+        sendAllUsers();
+        console.log(date.toUTCString(),"Game Over :", killingInTheNameOf);
+    }
+},10000);
 
 function sendAllUsers() {
     let str = "U"+(clients.map(a=>a.name).join("|"));
