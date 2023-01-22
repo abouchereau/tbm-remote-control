@@ -57,7 +57,7 @@ function displayPushButton(num) {
 }
 
 function displayUsers(users) {
-    console.log("displayUsers",users);
+    document.getElementById("connectes").innerHTML = users.length+" connectés : "+users.join(", ");
 }
 
 function redimButtons() {
@@ -99,3 +99,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
 window.addEventListener('resize', (e)=>{
     redimButtons();
 })
+window.addEventListener("beforeunload",  (event)=> {
+   if (socket != null) {
+       socket.send("CLOSE");
+   }
+});
