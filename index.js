@@ -31,7 +31,7 @@ socket.on('request', (request) => {
             let id = connection._id;
             for (let i = clients.length - 1; i >= 0; i--) {
                 if (clients[i] != null && clients[i].id == id) {
-                    killingInTheNameOf = clients.name;
+                    killingInTheNameOf = clients[i].name;
                     clients[i].connection.send("TIMEOUT");
                     clients[i].connection.close();
                     clients.splice(i);
