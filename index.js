@@ -26,7 +26,7 @@ socket.on('request', (request) => {
             clientTBM = connection;
         }
         if (clientTBM != null && msg.utf8Data.indexOf("S")===0) {
-            clientTBM.send(msg);
+            clientTBM.send(msg.utf8Data);
         }
     });
 });
