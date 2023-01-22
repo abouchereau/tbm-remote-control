@@ -57,7 +57,7 @@ function displayPushButton(num) {
 }
 
 function displayUsers(users) {
-    document.getElementById("connectes").innerHTML = users.length+" connectés : "+users.join(", ");
+    document.getElementById("connectes").innerHTML = users.length+" connecté"+(users.length>1?"s":"")+" : "+users.join(", ");
 }
 
 function redimButtons() {

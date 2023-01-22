@@ -34,6 +34,7 @@ body, html {
     color: #FFF;
     padding-left:15px;
     overflow: hidden;
+    text-align:left;
 }
 .box {
     display:flex;

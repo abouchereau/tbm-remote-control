@@ -17,7 +17,7 @@ socket.on('request', (request) => {
             let id = idIterator++;
             let name = msg.utf8Data.substr(1,16);
             const date = new Date();
-            console.log(date.toUTCString(),"New Challenger : ", name);
+            console.log(date.toUTCString(),"New Challenger : ", id, name);
             clients.push({"name":name, "connection":connection, "time":Date.now(),"id": id});
             connection._id = id;
             connection.send("OK");
@@ -29,6 +29,7 @@ socket.on('request', (request) => {
         if (msg.utf8Data.indexOf("CLOSE")===0) {
             let killingInTheNameOf = "";
             let id = connection._id;
+            console.log("CLOSE",id);
             for (let i = clients.length - 1; i >= 0; i--) {
                 if (clients[i] != null && clients[i].id == id) {
                     killingInTheNameOf = clients[i].name;
