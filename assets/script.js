@@ -1,5 +1,8 @@
 const SOCKET_PORT = 3615;
 let socket = null;
+let buttonPressed = -1;
+let timeout = null;
+const PRESS_TIME = 500;
 
 function toPseudo(str) {
     return str.toUpperCase().substr(0,16);
@@ -18,7 +21,7 @@ function addUser() {
         }
         else if (msg.data.indexOf("S")===0) {
             let num = msg.data.substr(1,1);
-            displayPushButton(1);
+            displayPushButton(num);
         }
         else if (msg.data.indexOf("U")===0) {
             displayUsers(msg.data.substr(1).split("|"));
@@ -34,13 +37,23 @@ function sample(num) {
     if (socket != null) {
         socket.send("S"+num);
     }
+    buttonPressed = num;
+    if (timeout != null) {
+        clearTimeout(timeout);
+    }
+    timeout = setTimeout(()=>{
+        buttonPressed = -1;
+
+    }, PRESS_TIME);
 }
 
 function displayPushButton(num) {
-    document.getElementById('btn'+num).classList.add("is-pushed");
-    setTimeout(()=>{
-        document.getElementById('btn'+num).classList.remove("is-pushed");
-    },600);
+    if (num != buttonPressed)  {
+        document.getElementById('btn'+num).classList.add("is-pushed");
+        setTimeout(()=>{
+            document.getElementById('btn'+num).classList.remove("is-pushed");
+        }, PRESS_TIME);
+    }
 }
 
 function displayUsers(users) {
