@@ -37,6 +37,7 @@ socket.on('request', (request) => {
                     clients.splice(i);
                     const date = new Date();
                     console.log(date.toUTCString(),"Game Over : ", killingInTheNameOf);
+                    sendAllUsers();
                 }
             }
         }
