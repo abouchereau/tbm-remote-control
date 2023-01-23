@@ -5,31 +5,33 @@ let timeout = null;
 const PRESS_TIME = 500;
 
 function toPseudo(str) {
-    return str.toUpperCase().substr(0,16);
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]/g, "").toUpperCase().substr(0,16);
 }
 function addUser() {
     let name = document.getElementById("pseudo").value;
-    socket = new WebSocket("ws://"+window.location.hostname+":" + SOCKET_PORT);
-    socket.onerror = e=>alert("Erreur lors de la connexion au serveur socket.");
-    socket.onmessage = (msg) => {
-        if (msg.data=="OK") {
-            document.getElementById("auth").style.display = "none";
+    if (name != "") {
+        socket = new WebSocket("ws://"+window.location.hostname+":" + SOCKET_PORT);
+        socket.onerror = e=>alert("Erreur lors de la connexion au serveur socket.");
+        socket.onmessage = (msg) => {
+            if (msg.data=="OK") {
+                document.getElementById("auth").style.display = "none";
+            }
+            else if (msg.data=="TIMEOUT") {
+                socket.close();
+                window.location.reload();
+            }
+            else if (msg.data.indexOf("S")===0) {
+                let num = msg.data.substr(1,1);
+                displayPushButton(num);
+            }
+            else if (msg.data.indexOf("U")===0) {
+                displayUsers(msg.data.substr(1).split("|"));
+            }
+        };
+        socket.onopen = e=> {
+            socket.send("N"+name);
+            sessionStorage.setItem("pseudo", name);
         }
-        else if (msg.data=="TIMEOUT") {
-            socket.close();
-            window.location.reload();
-        }
-        else if (msg.data.indexOf("S")===0) {
-            let num = msg.data.substr(1,1);
-            displayPushButton(num);
-        }
-        else if (msg.data.indexOf("U")===0) {
-            displayUsers(msg.data.substr(1).split("|"));
-        }
-    };
-    socket.onopen = e=> {
-        socket.send("N"+name);
-        sessionStorage.setItem("pseudo", name);
     }
 }
 
@@ -63,7 +65,7 @@ function displayUsers(users) {
 function redimButtons() {
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-    vh = vh-90;//- le bandeau
+    vh = vh-130;//- le bandeau
     let boxSide = 200;
     if (vw > vh) {//paysage => 3 boutons par lignes
         boxSide = Math.min(vw/3, vh/2);
