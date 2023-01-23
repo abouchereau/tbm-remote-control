@@ -107,12 +107,12 @@ window.addEventListener("beforeunload",  (event)=> {
    }
     let confirmationMessage = "Au revoir !";
 
-    e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+    event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
     return confirmationMessage;
 });
 
 document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
+    if (document.visibilityState == "hidden") {
         if (socket != null) {
             socket.send("CLOSE");
         }

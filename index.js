@@ -29,7 +29,6 @@ socket.on('request', (request) => {
         if (msg.utf8Data.indexOf("CLOSE")===0) {
             let killingInTheNameOf = "";
             let id = connection._id;
-            console.log("CLOSE",id);
             for (let i = clients.length - 1; i >= 0; i--) {
                 if (clients[i] != null && clients[i].id == id) {
                     killingInTheNameOf = clients[i].name;
@@ -37,7 +36,7 @@ socket.on('request', (request) => {
                     clients[i].connection.close();
                     clients.splice(i);
                     const date = new Date();
-                    console.log(date.toUTCString(),"Game Over : ", killingInTheNameOf);
+                    console.log(date.toUTCString(),"Game Over : ", id, killingInTheNameOf);
                     sendAllUsers();
                 }
             }
