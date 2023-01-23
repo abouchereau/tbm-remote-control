@@ -64,13 +64,13 @@ body, html {
 }
 
 #control {
-    background-color:#333;
+    background-color: #3A3A41;
 }
 #auth {
     color: #FFF;
     text-align:center;
     font-size:25px;
-    background-color:rgba(50,50,50,1);
+    background-color: #3A3A41;
 }
 #auth input, #auth button {
     padding: 15px;
@@ -82,6 +82,7 @@ h4 {
     margin-top:5px;
 }
 
+button:focus {outline:0;}
 
 [class*="push"] {
     position: absolute;
