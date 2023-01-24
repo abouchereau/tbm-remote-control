@@ -41,19 +41,20 @@
         </div>
     </div>
 </div>
+
+<div class="fullscreen epsilon" id="auth">
+    <div id="auth-container">
+        <form onsubmit="addUser();return false;">
+            <p>Choisis ton pseudo</p>
+            <input type="text" maxlength="16" id="pseudo" onkeyup="this.value=toPseudo(this.value)" />
+            <br />
+            <br />
+            <button class="btn btn-primary btn-lg" type="submit">OK</button>
+        </form>
+    </div>
+</div>
 <div class="footer">
     <div id="connectes"></div>
-</div>
-<div class="fullscreen epsilon" id="auth">
-    <form onsubmit="addUser();return false;">
-        <br /><br />
-        <br /><br />
-        <p>Choisis ton pseudo<br><span class="small">(16 car. max)</span></p>
-        <input type="text" maxlength="16" id="pseudo" onkeyup="this.value=toPseudo(this.value)" />
-        <br />
-        <br />
-        <button class="btn btn-primary btn-lg" type="submit">OK</button>
-    </form>
 </div>
 </body>
 <script type="text/javascript" src="assets/script.js"></script>

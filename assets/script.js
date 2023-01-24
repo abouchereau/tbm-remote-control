@@ -101,20 +101,18 @@ window.addEventListener('DOMContentLoaded', (e) => {
 window.addEventListener('resize', (e)=>{
     redimButtons();
 })
-window.addEventListener("beforeunload",  (event)=> {
-   if (socket != null) {
-       socket.send("CLOSE");
-   }
-    let confirmationMessage = "Au revoir !";
 
-    event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
-    return confirmationMessage;
-});
-
+window.onbeforeunload = function() {
+    if (socket != null) {
+        socket.send("CLOSE");
+        return "Au revoir !";
+    }
+};
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState == "hidden") {
         if (socket != null) {
             socket.send("CLOSE");
+            socket = null;
         }
         window.location.reload();
     }
