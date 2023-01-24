@@ -5,7 +5,7 @@ let timeout = null;
 const PRESS_TIME = 500;
 
 function toPseudo(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]/g, "").toUpperCase().substr(0,16);
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9 ]/g, "").toUpperCase().substr(0,16);
 }
 function addUser() {
     let name = document.getElementById("pseudo").value;
